@@ -1,21 +1,5 @@
-import { TaskDetailPage } from "@/components/tasks/task-detail-page";
-import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
-import { fetchTaskPostBySlug } from "@/lib/task-data";
-
 export const revalidate = 3
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
-export async function generateStaticParams() {
-  return [];
-}
-
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const post = await fetchTaskPostBySlug("classified", resolvedParams.slug);
-  return post ? await buildPostMetadata("classified", post) : await buildTaskMetadata("classified");
-}
-
-export default async function ClassifiedDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  return <TaskDetailPage task="classified" slug={resolvedParams.slug} />;
-}
+// Route contract only. All visible classified detail UI lives in src/editable.
+export { default, generateMetadata, generateStaticParams } from '@/editable/pages/ClassifiedDetailPage'
